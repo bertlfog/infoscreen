@@ -1,0 +1,31 @@
+ion-label.Rang {
+    max-width: 19.5vw;
+}
+ion-header {
+    display: block;
+    position: relative;
+    -ms-flex-order: -1;
+    order: -1;
+    width: 100%;
+    z-index: 10;
+}
+ion-img.logo {
+    height: 10vh;
+}
+ion-list-header {
+    font-size: 8vh;
+    font-weight: 700;
+}
+ion-list {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: block;
+    contain: content;
+    list-style-type: none;
+}

@@ -68,3 +68,20 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
+src/assets/video/1993.mp4
+src/assets/video/1997_Anfang.mp4
+src/assets/video/1997_Rest.mp4
+src/assets/video/2015_FF-Fest.mp4
+src/assets/video/2016_FF-Heuriger.mp4
+src/assets/video/2016_Replay_Komplett_mitLowerThird_FIN.mp4
+src/assets/video/2017_FF-Heuriger Grillenberg.mp4
+src/assets/video/2017_Replay.mp4
+src/assets/video/2018_FF-Heuriger.mp4
+src/assets/video/2019_FF-Heuriger.mp4
+src/assets/video/2022_FF-Heuriger.mp4
+src/assets/video/2023_FF-Heuriger.mp4
