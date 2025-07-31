@@ -15,8 +15,8 @@ import { DataService } from '../services/data.service';
 })
 export class VideoplayerPage implements OnInit {
   playlist: string[] = [
-    // 'assets/video/1993.mp4',
-    // 'assets/video/1997_Anfang.mp4',
+    'assets/video/1993.mp4',
+    'assets/video/1997_Anfang.mp4',
     'assets/video/1997_Rest.mp4',
     'assets/video/2015_FF-Fest.mp4',
     'assets/video/2016_FF-Heuriger.mp4',
@@ -30,7 +30,7 @@ export class VideoplayerPage implements OnInit {
 
   ];
   currentIndex: number = 0;
-  showbanner: boolean = true;
+  showbanner: boolean = false;
   rankings: string = "";
 
 
