@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-img src="../../assets/FFG_Bacardi_Logo.png" slot="end" class="logo" />
+    <ion-title>
+      Bierfass Spenden
+      
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Bierfass Spenden</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list-header>
+    <ion-label>Zeit</ion-label>
+    <ion-label>Name</ion-label>
+    
+  </ion-list-header>
+  <ion-list>
+    @for (r of beerDonations; track $index){
+      <ion-item>
+        <ion-label>{{ r.time }} </ion-label>
+        <ion-label>{{ r.name }} </ion-label>
+       
+        
+        <ion-button (click)="deleteDonation(r.id)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+      </ion-item>
+    }
+      
+  </ion-list>
+
+  <ion-item>
+    <ion-input #inputName placeholder="Name" [(ngModel)]="newName" (keypress)="eventHandler($event.keyCode)"></ion-input>
+    
+    <ion-button (click)="addDonation()" >Add Ranking</ion-button>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-img src="../../assets/FFG_Bacardi_Logo.png" slot="end" class="logo" />
+    <ion-title>
+      {{ competition }}
+      
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{competition}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list-header>
+    <ion-label>Rang</ion-label>
+    <ion-label>Name</ion-label>
+    <ion-label>Punkte</ion-label>
+  </ion-list-header>
+  <ion-list>
+    @for (r of rankings; track $index){
+      <ion-item>
+        <ion-label>{{ $index+1 }}</ion-label>
+        <ion-label>{{ r.name }} </ion-label>
+        <ion-label>{{ r.score }} </ion-label>
+        
+        <ion-button (click)="deleteRanking(r.id)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+      </ion-item>
+    }
+      
+  </ion-list>
+
+  <ion-item>
+    <ion-input #inputName placeholder="Name" [(ngModel)]="newName"></ion-input>
+    <ion-input type="number" placeholder="Punkte" [(ngModel)]="newScore" (keypress)="eventHandler($event.keyCode)"></ion-input>
+    <ion-button (click)="addRanking()" >Add Ranking</ion-button>
+  </ion-item>
+</ion-content>

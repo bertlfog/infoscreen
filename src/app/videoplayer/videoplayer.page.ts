@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonImg } from '@ionic/angular/standalone';
 import { DataService } from '../services/data.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -11,7 +12,7 @@ import { DataService } from '../services/data.service';
   templateUrl: './videoplayer.page.html',
   styleUrls: ['./videoplayer.page.scss'],
   standalone: true,
-  imports: [IonCard, CommonModule, FormsModule, IonCardHeader, IonCardContent]
+  imports: [IonImg, IonCard, CommonModule, FormsModule, IonCardHeader, IonCardContent]
 })
 export class VideoplayerPage implements OnInit {
   playlist: string[] = [
@@ -31,21 +32,46 @@ export class VideoplayerPage implements OnInit {
   ];
   currentIndex: number = 0;
   showbanner: boolean = false;
-  rankings: string = "";
+  scrollText: string = "";
+  bannerHeader: string="Bierfass-Spenden";
+  route:ActivatedRoute = inject(ActivatedRoute);
+  ds: DataService = inject(DataService);
+  competition!: string;
+  
+   
 
-
-  constructor(private ds: DataService) { 
-   this.ds.getParticipants('2025_Trinkathlon').subscribe((result) => {
-      console.log(result);
-      let text = "";
-      let rank = 1;
-      result.forEach( (r: { name: string; }) => {
-        if (rank > 1) text += '   -   ';
-        text += rank.toString() + '. ' + r.name;
-        rank++;
-      });
-      this.rankings = text;
-    });
+  constructor() { 
+    this.competition = this.route.snapshot.params['competition'];
+    if (this.competition) {
+      this.showbanner = true;
+      if (this.competition === 'beer_donations') {
+        
+        this.ds.getBeerDonations().subscribe((result) => {
+          console.log(result);
+          this.bannerHeader = result.length + " Bierfass-Spenden";
+          let text = "";
+          result.forEach( (r: { name: string; }) => {
+            if (text != "") text += '   -   ';
+            text += r.name;
+          });
+          this.scrollText = text;
+        });
+      }
+      else {
+        this.bannerHeader = "Ergebnisse " + this.competition;
+        this.ds.getParticipants(this.competition).subscribe((result) => {
+          console.log(result);
+          let text = "";
+          let rank = 1;
+          result.forEach( (r: { name: string; }) => {
+            if (rank > 1) text += '   -   ';
+            text += rank.toString() + '. ' + r.name;
+            rank++;
+          });
+          this.scrollText = text;
+        });
+      }
+    }
 
   }
   get currentVideo(): string {

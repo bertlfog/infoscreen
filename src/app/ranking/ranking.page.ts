@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonToolbar, IonButtons, IonImg, IonListHeader, IonLabel, IonList, IonItem } from '@ionic/angular/standalone';
@@ -17,6 +17,8 @@ import { ActivatedRoute } from '@angular/router';
   imports: [IonItem, IonList, IonContent, IonHeader, IonToolbar, CommonModule, FormsModule, IonButtons, IonImg, IonListHeader, IonLabel]
 })
 export class RankingPage implements OnInit {
+  @ViewChild('content') content!: IonContent;
+  scrollElement!: HTMLElement;
   competition!:string;
 
   rankings: IRank[] = [];
@@ -28,9 +30,29 @@ export class RankingPage implements OnInit {
     this.ds.getParticipants(this.competition).subscribe((data) => {
       console.log(data);
       this.rankings = data;
+      if (this.rankings.length > 9) {
+        this.autoscroll();
+      }
     });
+   
+  }
 
- 
+  autoscroll() {
+
+    
+      setInterval(() => {
+        this.content.scrollByPoint(0, 100, 1000); // Scroll down by 50 pixels every second
+        this.content.getScrollElement().then(el => {
+          if (el.scrollTop >= el.scrollHeight - el.clientHeight) 
+            this.content.scrollToTop(1000); // Reset to top when reaching the bottom
+         
+      });
+          
+        
+          // this.content.scrollToTop(0); // Reset to top when reaching the bottom
+        
+      }, 3000); // Adjust speed as needed
+    
   }
 
   ngOnInit() {

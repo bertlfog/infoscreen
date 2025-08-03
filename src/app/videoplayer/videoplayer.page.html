@@ -4,13 +4,20 @@
 
 @if (showbanner) {
 <ion-card class="banner-card">
-  <ion-card-header>Ergebnisse Trinkathlon 2025</ion-card-header>
+  <ion-card-header>{{ bannerHeader }}</ion-card-header>
   <ion-card-content>
+    
     <div class="banner">
+      
       <div class="scroll-container" #scrollContainer>
-        <p>{{ rankings }}</p>
+        
+        <p>{{ scrollText }}</p>
       </div>
+      
     </div>
+    
   </ion-card-content>
+
 </ion-card>
+
 }

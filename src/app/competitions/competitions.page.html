@@ -19,8 +19,9 @@
     @for (c of competitions; track $index){
       <ion-item>
         <ion-label>{{c.name }}</ion-label>
-        <ion-button href="/ranking/{{ c.name }}">Ranking</ion-button>
-        <ion-button>Edit</ion-button>
+        <ion-button href="/videoplayer/{{ c.name }}"><ion-icon name="play-outline" aria-hidden="true"></ion-icon></ion-button>
+        <ion-button href="/ranking/{{ c.name }}"><ion-icon name="eye-outline" color="white" aria-hidden="true"></ion-icon>Show Ranking</ion-button>
+        <ion-button href="/editcomp/{{ c.name }}"><ion-icon name="pencil-outline"></ion-icon>Edit Ranking</ion-button>
       </ion-item>
     }
     

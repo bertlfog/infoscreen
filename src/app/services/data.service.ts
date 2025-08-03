@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, Firestore, getDocs, orderBy, query } from '@angular/fire/firestore';
+import { collection, collectionData, Firestore, addDoc, getDocs, orderBy, deleteDoc, query, doc } from '@angular/fire/firestore';
 import { first, map, Observable } from 'rxjs';
 import { IRank } from '../model/rank';
 
@@ -8,6 +8,7 @@ import { IRank } from '../model/rank';
   providedIn: 'root',
 })
 export class DataService {
+
   private db: Firestore = inject(Firestore);
 
   constructor() {
@@ -15,7 +16,7 @@ export class DataService {
    }
    getParticipants(competition: string): Observable<any> {
     
-    return collectionData(query(collection(this.db, competition + '_participants'), orderBy("score", "desc")));
+    return collectionData(query(collection(this.db, competition + '_participants'), orderBy("score", "desc")), { idField: 'id' });;
             
    }
    async getSnapshot(competition: string) {
@@ -28,12 +29,38 @@ export class DataService {
     });
     return rankings;
    }
+   addRanking(competition: string, newRank: IRank) {
+    const collRef = collection(this.db, competition + '_participants');  
+    addDoc(collRef, newRank).then((ref) => {
+      console.log("Ranking added successfully: ", ref);
+    });
 
-   getRanking(competition: string) {
-    return "1. Kipp(s) weg - 2. Die Coolen - 3. Die Unglaublichen - 4. Zigeuner - 5. noch wer - 6. noch viel mehr - 7. Vuigas - 8. Wahnsinn, 1. Kipp(s) weg - 2. Die Coolen - 3. Die Unglaublichen - 4. Zigeuner - 5. noch wer - 6. noch viel mehr - 7. Vuigas - 8. Wahnsinn";
    }
-
+   deleteRanking(competition: string, id?: string) {
+    const collRef = collection(this.db, competition + '_participants'); 
+    deleteDoc(doc(collRef, id)).then(() => {
+      console.log("Ranking deleted successfully");
+    });
+  }
    getCompetitions(): Observable<any> {
     return collectionData(query(collection(this.db, 'competitions'), orderBy('name', 'desc')));
    }
+
+  getBeerDonations(): Observable<any> {
+    
+    return collectionData(query(collection(this.db, 'beer_donations'), orderBy('time', 'asc')), { idField: 'id' });;
+            
+   }
+   addBeerDonation(donation: { name: string }) {
+    const collRef = collection(this.db, 'beer_donations');  
+    addDoc(collRef, donation).then((ref) => {
+      console.log("Beer donation added successfully: ", ref);
+    });
+   }
+   deleteBeerDonation(id?: string) {
+    const collRef = collection(this.db, 'beer_donations'); 
+    deleteDoc(doc(collRef, id)).then(() => {
+      console.log("Beer donation deleted successfully");
+    }); 
+  }
 }

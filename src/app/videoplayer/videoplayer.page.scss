@@ -4,31 +4,33 @@
     width: 98%;
 }
 ion-card-header {
-    font-weight: bold;
-    font-size: x-large;
+    font-weight: bolder;
+    font-size: xx-large;
 }
 p {
-    font-size: x-large;
+    font-size: xx-large;
+    font-weight: bolder;  
 }
 .banner {
   font-size: x-large;
+
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  background-color: #f5f5f5;
+  background-color: rgb(243,212,212);
   padding: 10px;
   position: relative;
 }
 
 .scroll-container {
-    
+
   display: inline-block;
-  animation: scroll-text 60s linear infinite;
+  animation: scroll-text 120s linear infinite;
 }
 
 @keyframes scroll-text {
   from {
-    transform: translateX(100%);
+    transform: translateX(95vw);
   }
   to {
     transform: translateX(-100%);
