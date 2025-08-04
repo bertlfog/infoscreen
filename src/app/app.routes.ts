@@ -34,4 +34,8 @@ export const routes: Routes = [
     path: 'beer-editor',
     loadComponent: () => import('./beer-editor/beer-editor.page').then( m => m.BeerEditorPage)
   },
+  {
+    path: 'donations',
+    loadComponent: () => import('./donations/donations.page').then( m => m.DonationsPage)
+  },
 ];

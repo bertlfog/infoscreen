@@ -41,7 +41,7 @@ export class RankingPage implements OnInit {
 
     
       setInterval(() => {
-        this.content.scrollByPoint(0, 100, 1000); // Scroll down by 50 pixels every second
+        this.content.scrollByPoint(0, 1000, 5000); // Scroll down by 1000 pixels every 5 second
         this.content.getScrollElement().then(el => {
           if (el.scrollTop >= el.scrollHeight - el.clientHeight) 
             this.content.scrollToTop(1000); // Reset to top when reaching the bottom
