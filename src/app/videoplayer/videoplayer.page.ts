@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonImg } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent } from '@ionic/angular/standalone';
 import { DataService } from '../services/data.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './videoplayer.page.html',
   styleUrls: ['./videoplayer.page.scss'],
   standalone: true,
-  imports: [IonImg, IonCard, CommonModule, FormsModule, IonCardHeader, IonCardContent]
+  imports: [IonCard, CommonModule, FormsModule, IonCardHeader, IonCardContent]
 })
 export class VideoplayerPage implements OnInit {
   playlist: string[] = [

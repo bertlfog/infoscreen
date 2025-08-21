@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonListHeader, IonButtons, IonImg, IonItem, IonList } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonButtons, IonImg, IonItem, IonList } from '@ionic/angular/standalone';
 import { IBeerDonation } from '../model/beer-donation';
 import { DataService } from '../services/data.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './donations.page.html',
   styleUrls: ['./donations.page.scss'],
   standalone: true,
-  imports: [IonList, IonItem, IonImg, IonButtons, IonListHeader, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonList, IonItem, IonImg, IonButtons, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class DonationsPage implements OnInit {
   @ViewChild('content') content!: IonContent;
