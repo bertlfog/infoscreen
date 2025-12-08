@@ -27,7 +27,7 @@ export class DonationsPage implements OnInit {
     this.ds.getBeerDonations().subscribe((data) => {
       console.log(data);
       this.donations = data;
-      if (this.donations.length > 9) {
+      if (this.donations.length > 20) {
         this.autoscroll();
       }
     });
@@ -35,21 +35,21 @@ export class DonationsPage implements OnInit {
   }
     
   autoscroll() {
-        this.content.getScrollElement().then(el => {
-          this.scrollElement = el;
-          });
+
       setInterval(() => {
          // Scroll down by 1000 pixels every 5 second
-
-          if (this.scrollElement.scrollTop >= this.scrollElement.scrollHeight - this.scrollElement.clientHeight) {
-            this.content.scrollToTop(2000); // Reset to top when reaching the bottom
-          } else {
-            this.content.scrollByPoint(0, 500, 2000);
-          }
+        this.content.getScrollElement().then(el => {
+          this.scrollElement = el;
+        });
+        if (this.scrollElement.scrollTop >= this.scrollElement.scrollHeight - this.scrollElement.clientHeight) {
+          this.content.scrollToTop(2000); // Reset to top when reaching the bottom
+        } else {
+          this.content.scrollByPoint(0, 800, 2000);
+        }
 
           // this.content.scrollToTop(0); // Reset to top when reaching the bottom
         
-      }, 10000); // Adjust speed as needed
+      }, 15000); // Adjust speed as needed
     
   }
   ngOnInit() {

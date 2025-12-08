@@ -1,0 +1,21 @@
+
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button id="close-modal" (click)="cancel()">Close</ion-button>
+        </ion-buttons>        <ion-title>Edit Ranking</ion-title>
+        <ion-buttons slot="end">
+          <ion-button id="close-modal" (click)="confirm()">Save</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-item>
+        <ion-input placeholder="Name" type="text" [(ngModel)]="rank.name"></ion-input>
+        <ion-input type="number" placeholder="Punkte" [(ngModel)]="rank.score"></ion-input>
+        
+
+      </ion-item>
+    </ion-content>  

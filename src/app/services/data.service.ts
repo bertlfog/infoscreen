@@ -63,4 +63,7 @@ export class DataService {
       console.log("Beer donation deleted successfully");
     }); 
   }
+  getPlayerConfig(): Observable<any> {
+    return collectionData(query(collection(this.db, 'player_config')));
+  }
 }

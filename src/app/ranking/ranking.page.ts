@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RankingPage implements OnInit {
   @ViewChild('content') content!: IonContent;
+  @Input('comp') comp!: string;
   scrollElement!: HTMLElement;
   competition!:string;
 
@@ -26,36 +27,50 @@ export class RankingPage implements OnInit {
   route:ActivatedRoute = inject(ActivatedRoute);
 
   constructor() { 
-    this.competition = this.route.snapshot.params['competition'];
-    this.ds.getParticipants(this.competition).subscribe((data) => {
-      console.log(data);
-      this.rankings = data;
-      if (this.rankings.length > 9) {
-        this.autoscroll();
-      }
-    });
-   
+
+
   }
 
   autoscroll() {
 
-    
       setInterval(() => {
-        this.content.scrollByPoint(0, 1000, 5000); // Scroll down by 1000 pixels every 5 second
+         // Scroll down by 1000 pixels every 5 second
         this.content.getScrollElement().then(el => {
-          if (el.scrollTop >= el.scrollHeight - el.clientHeight) 
-            this.content.scrollToTop(1000); // Reset to top when reaching the bottom
-         
-      });
-          
+          this.scrollElement = el;
+        });
+        if (this.scrollElement.scrollTop >= this.scrollElement.scrollHeight - this.scrollElement.clientHeight) {
+          this.content.scrollToTop(2000); // Reset to top when reaching the bottom
+        } else {
+          this.content.scrollByPoint(0, 785, 2000);
+        }
+
+    
         
-          // this.content.scrollToTop(0); // Reset to top when reaching the bottom
-        
-      }, 3000); // Adjust speed as needed
+      }, 10000); // Adjust speed as needed
     
   }
 
   ngOnInit() {
+        this.competition = this.route.snapshot.params['competition'];
+    console.log("Competition from route:", this.competition);
+    console.log("Competition from input:", this.comp);
+    if (this.competition) {
+      this.ds.getParticipants(this.competition).subscribe((data) => {
+        console.log(data);
+        this.rankings = data;
+        if (this.rankings.length > 10) {
+          this.autoscroll();
+        }
+      }); 
+    } else if (this.comp) {
+      this.ds.getParticipants(this.comp).subscribe((data) => {
+        console.log(data);
+        this.rankings = data;
+        if (this.rankings.length > 10) {
+          this.autoscroll();
+        }
+      });
+    }  
   }
 
 }

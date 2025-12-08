@@ -1,9 +1,11 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonHeader, IonImg, IonTitle, IonButton, IonIcon, IonItem, IonLabel, IonToolbar, IonContent, IonList, IonListHeader, IonInput } from "@ionic/angular/standalone";
+import { IonHeader, IonImg, IonTitle, IonButton, IonIcon, IonItem, IonLabel, IonToolbar, IonContent, IonList, IonListHeader, IonInput, ModalController } from "@ionic/angular/standalone";
 import { IRank } from '../model/rank';
 import { DataService } from '../services/data.service';
 import { FormsModule } from '@angular/forms';
+import { OverlayEventDetail } from '@ionic/core/components';
+import { RankEditorComponent } from '../rank-editor/rank-editor.component';
 
 @Component({
   selector: 'app-comp-editor',
@@ -13,6 +15,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true  
 })
 export class CompEditorPage  implements OnInit {
+  
   @ViewChild('inputName') inputName!: IonInput;
 
   ds: DataService = inject(DataService);
@@ -21,6 +24,10 @@ export class CompEditorPage  implements OnInit {
   rankings: IRank[] = [];
   newName: string = "";
   newScore: number = 0;
+  editName: string = "";
+  editScore: number = 0;
+  editId?: string = "";
+  modalCtrl: ModalController = inject(ModalController);
 
   constructor() {
     this.competition = this.route.snapshot.params['competition'];
@@ -41,7 +48,27 @@ export class CompEditorPage  implements OnInit {
       console.error("Name and score must be provided");
     }
   }
+  async initEdit(r: IRank) {
+    console.log("Editing rank:", r);
+    this.editName = r.name;
+    this.editScore = r.score;
+    this.editId = r.id;
+    const modal = await this.modalCtrl.create({
+      component: RankEditorComponent,
+      componentProps: { rank: r } // Pass any necessary data to the modal
+    });
+    
+    modal.present();
 
+    const { data, role } = await modal.onWillDismiss();
+    if (role === 'confirm') {
+      if (data) {
+        const updatedRank: IRank = { name: data.name, score: data.score, id: data.id };
+        this.ds.deleteRanking(this.competition, data.id);
+        this.ds.addRanking(this.competition, updatedRank);
+      }
+    }
+  }
   deleteRanking(id?: string) {
     this.ds.deleteRanking(this.competition, id);
   }
@@ -53,6 +80,7 @@ export class CompEditorPage  implements OnInit {
       
     }
   }
+
 
   ngOnInit() {}
 

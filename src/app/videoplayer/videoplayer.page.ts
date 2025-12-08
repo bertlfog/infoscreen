@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent } from '@ionic/angular/standalone';
@@ -15,6 +15,8 @@ import { ActivatedRoute } from '@angular/router';
   imports: [IonCard, CommonModule, FormsModule, IonCardHeader, IonCardContent]
 })
 export class VideoplayerPage implements OnInit {
+  @ViewChild('scrollContainer') scrollContainer!: HTMLElement;
+  @Input('comp') comp!: string;
   playlist: string[] = [
     'assets/video/1993.mp4',
     'assets/video/1997_Anfang.mp4',
@@ -28,7 +30,7 @@ export class VideoplayerPage implements OnInit {
     'assets/video/2019_FF-Heuriger.mp4', 
     'assets/video/2022_FF-Heuriger.mp4',
     'assets/video/2023_FF-Heuriger.mp4',
-
+    'assets/video/2024_FF-Heuriger.mp4',
   ];
   currentIndex: number = 0;
   showbanner: boolean = false;
@@ -41,37 +43,7 @@ export class VideoplayerPage implements OnInit {
    
 
   constructor() { 
-    this.competition = this.route.snapshot.params['competition'];
-    if (this.competition) {
-      this.showbanner = true;
-      if (this.competition === 'beer_donations') {
-        
-        this.ds.getBeerDonations().subscribe((result) => {
-          console.log(result);
-          this.bannerHeader = result.length + " Bierfass-Spenden";
-          let text = "";
-          result.forEach( (r: { name: string; }) => {
-            if (text != "") text += '   -   ';
-            text += r.name;
-          });
-          this.scrollText = text;
-        });
-      }
-      else {
-        this.bannerHeader = "Ergebnisse " + this.competition;
-        this.ds.getParticipants(this.competition).subscribe((result) => {
-          console.log(result);
-          let text = "";
-          let rank = 1;
-          result.forEach( (r: { name: string; }) => {
-            if (rank > 1) text += '   -   ';
-            text += rank.toString() + '. ' + r.name;
-            rank++;
-          });
-          this.scrollText = text;
-        });
-      }
-    }
+
 
   }
   get currentVideo(): string {
@@ -88,6 +60,44 @@ export class VideoplayerPage implements OnInit {
     }
   }
   ngOnInit() {
+    this.competition = this.route.snapshot.params['competition'];
+    console.log("Competition from route:", this.competition);
+    console.log("Competition from input:", this.comp);
+    const c = this.competition ? this.competition : this.comp;
+    console.log("Competition:", c);
+    if (c) {
+      this.showbanner = true;
+      
+      if (c === 'beer_donations') {
+        
+        this.ds.getBeerDonations().subscribe((result) => {
+          console.log(result);
+          this.bannerHeader = result.length + " Bierfass-Spenden";
+          let text = "";
+                   
+          
+          result.forEach( (r: { name: string; }) => {
+            if (text != "") text += '   ***   ';
+            text += r.name;
+          });
+          this.scrollText = text;
+
+        });
+      } else {
+        this.bannerHeader = "Ergebnisse " + c;
+        this.ds.getParticipants(c).subscribe((result) => {
+          console.log(result);
+          let text = "";
+          let rank = 1;
+          result.forEach( (r: { name: string; }) => {
+            if (rank > 1) text += '   -   ';
+            text += rank.toString() + '. ' + r.name;
+            rank++;
+          });
+          this.scrollText = text;
+        });
+      }
+    }
   }
 
 }

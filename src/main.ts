@@ -8,14 +8,19 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from './environments/environment.prod';
+import { authServiceProvider } from './app/services/service-factory';
+import { AuthService } from './app/services/auth.service';
+
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: AuthService, useFactory: authServiceProvider},
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()), 
     provideFirestore(() => getFirestore()),
+    
   ],
 });
