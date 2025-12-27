@@ -15,7 +15,7 @@ ion-list-header {
     font-weight: 700;
 }
 ion-item {
-    font-size: 5.6vh;
+    font-size: 5.75vh;
     font-weight: 600;
 }
 ion-list {
@@ -32,10 +32,13 @@ ion-list {
     list-style-type: none;
 }
 ion-label.Rang {
-    max-width: 19.5vw;
+    max-width: 15vw;
 }
 ion-label.Points {
-    max-width: 26vw;
+    max-width: 20vw;
+}
+ion-label.Pointheader {
+    max-width: 15vw;
 }
 .second {
     --ion-background-color: rgb(243,212,212);

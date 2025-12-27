@@ -13,10 +13,10 @@ import { DataService } from '../services/data.service';
   imports: [CommonModule, FormsModule, RankingPage, VideoplayerPage]
 })
 export class PlayerPage implements OnInit {
-  @ViewChild('rankingPage') rankingPage!: RankingPage;
-  @ViewChild('videoplayerPage') videoplayerPage!: VideoplayerPage;
+  @ViewChild('rank') rankComponent!: RankingPage;
   competition: string = "beer_donations"; // Default competition, can be changed based on routing or user input
   page: string = ""; // Default page to show, can be changed based on user interaction
+  onlyTop10: boolean = false;
   ds: DataService = inject(DataService);
   rankingDisplay: string = 'none';
   videoplayerDisplay: string = 'block';
@@ -26,24 +26,29 @@ export class PlayerPage implements OnInit {
   }
 
   ngOnInit() {
-        this.ds.getPlayerConfig().subscribe((config) => {
+      this.ds.getPlayerConfig().subscribe((config) => {
       console.log("Player config:", config[0]);
       if (config[0]) {
         this.competition = config[0].competition;
         this.page = config[0].page || "video"; // Default to video if not specified
-
-
+        this.onlyTop10 = config[0].onlyTop10 || "false";
       }
       console.log("Current page:", this.page);
       console.log("Current competition:", this.competition);
+      console.log("Only Top 10:", this.onlyTop10);
 
       if (this.page === "video") {
         this.rankingDisplay = 'none';
         this.videoplayerDisplay = 'block';
+        
       }
       if (this.page === "ranking") {
         this.videoplayerDisplay = 'none';
         this.rankingDisplay = 'block';
+        
+      }
+      if (this.rankComponent) {
+        this.rankComponent.ngOnInit();
       }
     });
   }

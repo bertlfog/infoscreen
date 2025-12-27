@@ -2,8 +2,8 @@
     <app-videoplayer height="100%" comp="{{ competition }}" ></app-videoplayer>
 } 
 @if (page === 'ranking') {
-    <app-ranking comp="{{ competition }}" ></app-ranking>
-  } 
 
+    <app-ranking #rank comp="{{ competition }}" onlyTop10="{{onlyTop10}}"></app-ranking>
+} 
 
 
