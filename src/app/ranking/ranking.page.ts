@@ -53,9 +53,9 @@ export class RankingPage implements OnInit {
           const scrollElementRect = this.scrollElement.getBoundingClientRect();
 
           // Check if item is fully visible (considering header height)
-          const isFullyVisible = rect.bottom <= scrollElementRect.bottom;
-          console.log(`Item ${item.id} visibility:`, rect.bottom, scrollElementRect.bottom, isFullyVisible);
-          if (!isFullyVisible) {
+          const isVisible = rect.bottom <= scrollElementRect.bottom;
+          console.log(`Item ${item.id} visibility:`, rect.bottom, scrollElementRect.bottom, isVisible);
+          if (!isVisible) {
             console.log("Scrolling to item:", item.id);
             console.log("Item rect:", rect);
             console.log("Scroll element rect:", scrollElementRect);
