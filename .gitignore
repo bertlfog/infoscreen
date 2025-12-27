@@ -23,7 +23,6 @@ log.txt
 /public
 /platforms
 /plugins
-/environments
 
 # Compiled output
 /dist
@@ -78,6 +77,5 @@ Thumbs.db
 
 # Video files
 src/assets/video
-
-src/environments/environment.prod.ts
-src/environments/environment.ts
+#Configuration files
+src/environments/
